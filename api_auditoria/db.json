@@ -1,0 +1,9 @@
+
+
+{
+    "user": "admin",
+    "password": "aep.2025",
+    "host": "192.168.3.152",
+    "port": 27017,
+    "database": "aep"
+}

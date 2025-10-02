@@ -1,0 +1,10 @@
+FROM golang:1.25-alpine
+
+WORKDIR /app
+
+# Copia dependencias
+COPY go.mod go.sum ./
+RUN go mod download
+
+# El código se monta como volumen, no se copia aquí
+CMD ["go", "run", "main.go"]
