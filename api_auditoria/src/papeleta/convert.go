@@ -22,7 +22,7 @@ func ConvertToPapeletaRecepcion(src *model.PapeletaRecepcionTopic, papeleta *mod
 	if src.Op == "r" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
-		fechaEvento = utils.ToFormattedDateTime(src.TsMS)
+		fechaEvento = utils.ToFormattedDateTimeEvento(src.TsMS)
 	}
 	return &model.PapeletaRecepcion{
 		NroPapeleta:              topic.NroPapeleta,

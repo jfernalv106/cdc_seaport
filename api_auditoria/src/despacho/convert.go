@@ -16,7 +16,7 @@ func TransformDespacho(t *model.DespachoTopic, visacion *model.Despacho) *model.
 	if t.Op == "r" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
-		fechaEvento = utils.ToFormattedDateTime(t.TsMS)
+		fechaEvento = utils.ToFormattedDateTimeEvento(t.TsMS)
 	}
 	return &model.Despacho{
 		ID:                    topic.ID,

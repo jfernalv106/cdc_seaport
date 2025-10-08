@@ -41,7 +41,7 @@ func TransformVisacion(src *model.VisacionTopic, visacion *model.Visacion) *mode
 	if src.Op == "r" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
-		fechaEvento = utils.ToFormattedDateTime(src.TsMS)
+		fechaEvento = utils.ToFormattedDateTimeEvento(src.TsMS)
 	}
 	var mercancias *[]model.MercanciasDespachada
 	if visacion != nil && visacion.Mercacias != nil {

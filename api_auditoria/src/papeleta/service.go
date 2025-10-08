@@ -133,11 +133,11 @@ func (s *service) AgruparPapeletaDetallePorIdPapeleta() {
 			if d.NroPapeleta != nil {
 				px, err := s.repo.GetUltimaPapeletaPorEvento(*d.NroPapeleta)
 				if err != nil {
-					s.log.Println("error GetUltimaPapeletaPorEvento:", err)
+					s.log.Println("error GetUltimaPapeletaRecepcionPorEvento:", err)
 					continue
 				}
 				if px == nil {
-					s.log.Println("no se encontró papeleta recepcion con id:", *d.NroPapeleta)
+					s.log.Println("no se encontró papeleta recepcion con nro_papeleta:", *d.NroPapeleta)
 					continue
 				}
 				pxActualizada, err := ReemplazarDetalle(px, &d)
@@ -156,7 +156,7 @@ func (s *service) AgruparPapeletaDetallePorIdPapeleta() {
 
 					_, err = s.repo.GuardarPapeletaRecepcion(pxActualizada)
 					if err != nil {
-						fmt.Println("error Guardar BL:", err)
+						fmt.Printf("error Guardar Papeleta Recepcion :", err, *pxActualizada.NroPapeleta)
 						continue
 					}
 				}

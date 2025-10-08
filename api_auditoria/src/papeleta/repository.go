@@ -147,7 +147,7 @@ func (r *repo) GetUltimaPapeletaPorEvento(nroPapeleta string) (*model.PapeletaRe
 		return nil, err
 	}
 	if len(result) == 0 {
-		return nil, fmt.Errorf("no se encontró Papeleta con id %s", nroPapeleta)
+		return nil, fmt.Errorf("no se encontró Papeleta con nro_papeleta: %s", nroPapeleta)
 	}
 	sort.Slice(result, func(i, j int) bool {
 		fechaI, _ := utils.ParseFecha(*result[i].FechaEvento)

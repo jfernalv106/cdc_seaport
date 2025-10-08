@@ -39,12 +39,38 @@ func ToStr(v *int64) *string {
 	return &s
 }
 
-func ToFormattedDateTime(v *int64) *string {
-	if v == nil {
+func ToFormattedDateTimeEvento(ms *int64) *string {
+	if ms == nil {
 		return nil
 	}
-	t := time.UnixMilli(*v)
-	s := t.Format("2006-01-02 15:04:05")
+	// 1) Ancla el instante a UTC (ts_ms y las fechas de Debezium son epoch UTC)
+	tUTC := time.UnixMilli(*ms).UTC()
+
+	// 2) Conviértelo a tu zona para mostrar
+	loc, err := time.LoadLocation("America/Santiago")
+	if err != nil {
+		return nil
+	}
+	s := tUTC.In(loc).Format("2006-01-02 15:04:05")
+	return &s
+}
+func ToFormattedDateTime(ms *int64) *string {
+	if ms == nil {
+		return nil
+	}
+	loc, err := time.LoadLocation("America/Santiago")
+	if err != nil {
+		return nil
+	}
+	// 1) Léelo en UTC (no hay otra)
+	tUTC := time.UnixMilli(*ms).UTC()
+	// 2) Reinterpreta sus componentes como locales (sin aplicar offset)
+	tLocal := time.Date(
+		tUTC.Year(), tUTC.Month(), tUTC.Day(),
+		tUTC.Hour(), tUTC.Minute(), tUTC.Second(), tUTC.Nanosecond(),
+		loc,
+	)
+	s := tLocal.Format("2006-01-02 15:04:05")
 	return &s
 }
 func ToFormattedDate(days *int64) *string {

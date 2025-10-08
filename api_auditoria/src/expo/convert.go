@@ -24,7 +24,7 @@ func ConvertToPapeletaExpo(src *model.PapeletaExpoTopic, papeleta *model.Papelet
 	if src.Op == "r" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
-		fechaEvento = utils.ToFormattedDateTime(&src.TsMS)
+		fechaEvento = utils.ToFormattedDateTimeEvento(&src.TsMS)
 	}
 	return &model.PapeletaExpo{
 		ID:                topic.ID,

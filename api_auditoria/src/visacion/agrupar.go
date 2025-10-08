@@ -19,7 +19,7 @@ func ReemplazarMercacia(visacion *model.Visacion, nuevaMercancia *model.Mercanci
 	if nuevaMercancia == nil {
 		return nil, fmt.Errorf("el nuevo detalle no puede ser nulo")
 	}
-	if visacion.Evento != "CREATE" && nuevaMercancia.Evento != "CREATE" {
+	if visacion.Evento != "CREATE" || nuevaMercancia.Evento != "CREATE" {
 		visacion.IDMongo = primitive.NewObjectID()
 	}
 
@@ -54,8 +54,9 @@ func ReemplazarMercacia(visacion *model.Visacion, nuevaMercancia *model.Mercanci
 		}
 	}
 
-	if nuevaMercancia.Evento != "DELETE" {
-		visacion.Evento = nuevaMercancia.Evento
+	visacion.Evento = nuevaMercancia.Evento
+	if nuevaMercancia.Evento == "DELETE" {
+		visacion.Evento = "UPDATE"
 	}
 	visacion.FechaEvento = nuevaMercancia.FechaEvento
 	return visacion, nil

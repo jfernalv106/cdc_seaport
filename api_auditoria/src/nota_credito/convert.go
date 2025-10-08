@@ -24,7 +24,7 @@ func ConvertToNotaCredito(src *model.NotaCreditoTopic, nc *model.NotaCredito) *m
 	if *src.Op == "r" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
-		fechaEvento = utils.ToFormattedDateTime(src.TsMS)
+		fechaEvento = utils.ToFormattedDateTimeEvento(src.TsMS)
 	}
 	return &model.NotaCredito{
 		IDNroNc:       topic.IDNroNc,

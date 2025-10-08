@@ -16,7 +16,7 @@ func ReemplazarBlFecha(bl *model.BL, nueva model.BlFecha) (*model.BL, error) {
 		fmt.Println("Inicializando BL FECHAS ")
 		bl.BlFechas = &[]model.BlFecha{}
 	}
-	if nueva.Evento != "CREATE" && bl.Evento != "CREATE" {
+	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
 		bl.IDMongo = primitive.NewObjectID()
 	}
 	if nueva.Evento == "CREATE" || len(*bl.BlFechas) == 0 {
@@ -50,8 +50,9 @@ func ReemplazarBlFecha(bl *model.BL, nueva model.BlFecha) (*model.BL, error) {
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		bl.Evento = nueva.Evento
+	bl.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		bl.Evento = "UPDATE"
 	}
 	bl.FechaEvento = nueva.FechaEvento
 	return bl, nil
@@ -67,7 +68,7 @@ func ReemplazarBlFlete(bl *model.BL, nueva model.BlFlete) (*model.BL, error) {
 		bl.BlFletes = &[]model.BlFlete{}
 	}
 
-	if nueva.Evento != "CREATE" && bl.Evento != "CREATE" {
+	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
 		bl.IDMongo = primitive.NewObjectID()
 	}
 	if nueva.Evento == "CREATE" || len(*bl.BlFletes) == 0 {
@@ -101,8 +102,9 @@ func ReemplazarBlFlete(bl *model.BL, nueva model.BlFlete) (*model.BL, error) {
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		bl.Evento = nueva.Evento
+	bl.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		bl.Evento = "UPDATE"
 	}
 	bl.FechaEvento = nueva.FechaEvento
 	return bl, nil
@@ -118,7 +120,7 @@ func ReemplazarBlItem(bl *model.BL, nueva model.BlItem) (*model.BL, error) {
 		bl.BlItems = &[]model.BlItem{}
 	}
 
-	if nueva.Evento != "CREATE" && bl.Evento != "CREATE" {
+	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
 		bl.IDMongo = primitive.NewObjectID()
 	}
 	if nueva.Evento == "CREATE" || len(*bl.BlItems) == 0 {
@@ -152,8 +154,9 @@ func ReemplazarBlItem(bl *model.BL, nueva model.BlItem) (*model.BL, error) {
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		bl.Evento = nueva.Evento
+	bl.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		bl.Evento = "UPDATE"
 	}
 	bl.FechaEvento = nueva.FechaEvento
 	return bl, nil
@@ -200,8 +203,9 @@ func ReemplazarBlItemImo(item *model.BlItem, nueva model.BlItemImo) (*model.BlIt
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		item.Evento = nueva.Evento
+	item.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		item.Evento = "UPDATE"
 	}
 	item.FechaEvento = nueva.FechaEvento
 	return item, nil
@@ -248,8 +252,9 @@ func ReemplazarBlItemContenedor(item *model.BlItem, nueva model.BlItemContenedor
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		item.Evento = nueva.Evento
+	item.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		item.Evento = "UPDATE"
 	}
 	item.FechaEvento = nueva.FechaEvento
 	return item, nil
@@ -296,8 +301,9 @@ func ReemplazarBlItemContenedorImo(cnt *model.BlItemContenedor, nueva model.BlIt
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		cnt.Evento = nueva.Evento
+	cnt.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		cnt.Evento = "UPDATE"
 	}
 	cnt.FechaEvento = nueva.FechaEvento
 	return cnt, nil
@@ -344,8 +350,9 @@ func ReemplazarBlItemContenedorSello(cnt *model.BlItemContenedor, nueva model.Bl
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		cnt.Evento = nueva.Evento
+	cnt.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		cnt.Evento = "UPDATE"
 	}
 	cnt.FechaEvento = nueva.FechaEvento
 	return cnt, nil
@@ -361,7 +368,7 @@ func ReemplazarBlParticipante(bl *model.BL, nueva model.BlParticipante) (*model.
 		bl.BlParticipantes = &[]model.BlParticipante{}
 	}
 
-	if nueva.Evento != "CREATE" && bl.Evento != "CREATE" {
+	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
 		bl.IDMongo = primitive.NewObjectID()
 	}
 	if nueva.Evento == "CREATE" || len(*bl.BlParticipantes) == 0 {
@@ -395,8 +402,9 @@ func ReemplazarBlParticipante(bl *model.BL, nueva model.BlParticipante) (*model.
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		bl.Evento = nueva.Evento
+	bl.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		bl.Evento = "UPDATE"
 	}
 	bl.FechaEvento = nueva.FechaEvento
 	return bl, nil
@@ -412,7 +420,7 @@ func ReemplazarBlObservacion(bl *model.BL, nueva model.BlObservacion) (*model.BL
 		bl.BlObservaciones = &[]model.BlObservacion{}
 	}
 
-	if nueva.Evento != "CREATE" && bl.Evento != "CREATE" {
+	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
 		bl.IDMongo = primitive.NewObjectID()
 	}
 	if nueva.Evento == "CREATE" || len(*bl.BlObservaciones) == 0 {
@@ -446,8 +454,9 @@ func ReemplazarBlObservacion(bl *model.BL, nueva model.BlObservacion) (*model.BL
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		bl.Evento = nueva.Evento
+	bl.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		bl.Evento = "UPDATE"
 	}
 	bl.FechaEvento = nueva.FechaEvento
 	return bl, nil
@@ -463,7 +472,7 @@ func ReemplazarBlLocacion(bl *model.BL, nueva model.BlLocacion) (*model.BL, erro
 		bl.BlLocaciones = &[]model.BlLocacion{}
 	}
 
-	if nueva.Evento != "CREATE" && bl.Evento != "CREATE" {
+	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
 		bl.IDMongo = primitive.NewObjectID()
 	}
 	if nueva.Evento == "CREATE" || len(*bl.BlLocaciones) == 0 {
@@ -497,8 +506,9 @@ func ReemplazarBlLocacion(bl *model.BL, nueva model.BlLocacion) (*model.BL, erro
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		bl.Evento = nueva.Evento
+	bl.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		bl.Evento = "UPDATE"
 	}
 	bl.FechaEvento = nueva.FechaEvento
 	return bl, nil
@@ -514,7 +524,7 @@ func ReemplazarBlReferencia(bl *model.BL, nueva model.BlReferencia) (*model.BL, 
 		bl.BlReferencias = &[]model.BlReferencia{}
 	}
 
-	if nueva.Evento != "CREATE" && bl.Evento != "CREATE" {
+	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
 		bl.IDMongo = primitive.NewObjectID()
 	}
 	if nueva.Evento == "CREATE" || len(*bl.BlReferencias) == 0 {
@@ -548,8 +558,9 @@ func ReemplazarBlReferencia(bl *model.BL, nueva model.BlReferencia) (*model.BL, 
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		bl.Evento = nueva.Evento
+	bl.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		bl.Evento = "UPDATE"
 	}
 	bl.FechaEvento = nueva.FechaEvento
 	return bl, nil
@@ -565,7 +576,7 @@ func ReemplazarBlTransbordo(bl *model.BL, nueva model.BlTransbordo) (*model.BL, 
 		bl.BlTransbordos = &[]model.BlTransbordo{}
 	}
 
-	if nueva.Evento != "CREATE" && bl.Evento != "CREATE" {
+	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
 		bl.IDMongo = primitive.NewObjectID()
 	}
 	if nueva.Evento == "CREATE" || len(*bl.BlTransbordos) == 0 {
@@ -599,8 +610,9 @@ func ReemplazarBlTransbordo(bl *model.BL, nueva model.BlTransbordo) (*model.BL, 
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		bl.Evento = nueva.Evento
+	bl.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		bl.Evento = "UPDATE"
 	}
 	bl.FechaEvento = nueva.FechaEvento
 	return bl, nil
@@ -616,7 +628,7 @@ func ReemplazarBlTransporte(bl *model.BL, nueva model.BlTransporte) (*model.BL, 
 		bl.BlTransportes = &[]model.BlTransporte{}
 	}
 
-	if nueva.Evento != "CREATE" && bl.Evento != "CREATE" {
+	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
 		bl.IDMongo = primitive.NewObjectID()
 	}
 	if nueva.Evento == "CREATE" || len(*bl.BlTransportes) == 0 {
@@ -650,8 +662,9 @@ func ReemplazarBlTransporte(bl *model.BL, nueva model.BlTransporte) (*model.BL, 
 		}
 	}
 
-	if nueva.Evento != "DELETE" {
-		bl.Evento = nueva.Evento
+	bl.Evento = nueva.Evento
+	if nueva.Evento == "DELETE" {
+		bl.Evento = "UPDATE"
 	}
 	bl.FechaEvento = nueva.FechaEvento
 	return bl, nil

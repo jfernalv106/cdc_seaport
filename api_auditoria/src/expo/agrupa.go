@@ -19,7 +19,7 @@ func ReemplazarDetalle(papeleta *model.PapeletaExpo, nuevoDetalle *model.Papelet
 	if nuevoDetalle == nil {
 		return nil, fmt.Errorf("el nuevo detalle no puede ser nulo")
 	}
-	if papeleta.Evento != "CREATE" && nuevoDetalle.Evento != "CREATE" {
+	if papeleta.Evento != "CREATE" || nuevoDetalle.Evento != "CREATE" {
 		papeleta.IDMongo = primitive.NewObjectID()
 	}
 
@@ -54,8 +54,9 @@ func ReemplazarDetalle(papeleta *model.PapeletaExpo, nuevoDetalle *model.Papelet
 		}
 	}
 
-	if nuevoDetalle.Evento != "DELETE" {
-		papeleta.Evento = nuevoDetalle.Evento
+	papeleta.Evento = nuevoDetalle.Evento
+	if nuevoDetalle.Evento == "DELETE" {
+		papeleta.Evento = "UPDATE"
 	}
 	papeleta.FechaEvento = nuevoDetalle.FechaEvento
 	return papeleta, nil

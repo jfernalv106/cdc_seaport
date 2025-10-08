@@ -18,7 +18,7 @@ func ConvertToFactura(src *model.FacturaTopic, factura *model.Factura) *model.Fa
 	if src.Op == "r" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
-		fechaEvento = utils.ToFormattedDateTime(src.TsMS)
+		fechaEvento = utils.ToFormattedDateTimeEvento(src.TsMS)
 	}
 	if factura != nil && factura.Detalles != nil {
 		fmt.Printf("Reemplazando detalles de la factura existente: %d\n", len(*factura.Detalles))

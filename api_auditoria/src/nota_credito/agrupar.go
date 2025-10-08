@@ -19,7 +19,7 @@ func ReemplazarDetalle(nota *model.NotaCredito, nuevoServicio *model.NotaCredito
 	if nuevoServicio == nil {
 		return nil, fmt.Errorf("el nuevo Servicio no puede ser nulo")
 	}
-	if nota.Evento != "CREATE" && nuevoServicio.Evento != "CREATE" {
+	if nota.Evento != "CREATE" || nuevoServicio.Evento != "CREATE" {
 		nota.IDMongo = primitive.NewObjectID()
 	}
 
@@ -54,8 +54,9 @@ func ReemplazarDetalle(nota *model.NotaCredito, nuevoServicio *model.NotaCredito
 		}
 	}
 
-	if nuevoServicio.Evento != "DELETE" {
-		nota.Evento = nuevoServicio.Evento
+	nota.Evento = nuevoServicio.Evento
+	if nuevoServicio.Evento == "DELETE" {
+		nota.Evento = "UPDATE"
 	}
 	nota.FechaEvento = nuevoServicio.FechaEvento
 	return nota, nil

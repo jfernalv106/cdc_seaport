@@ -49,7 +49,7 @@ func ConvertToBL(src *model.BlTopic, base *model.BL) *model.BL {
 	if *src.Op == "r" {
 		bl.FechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
-		bl.FechaEvento = utils.ToFormattedDateTime(src.TsMS)
+		bl.FechaEvento = utils.ToFormattedDateTimeEvento(src.TsMS)
 	}
 
 	return bl
@@ -88,7 +88,7 @@ func ConvertToBLFlete(src *model.BlFleteTopic) *model.BlFlete {
 		Tipo:        topic.Tipo,
 		BlNroBl:     topic.BlNroBl,
 		Evento:      utils.MapOperation(*src.Op),
-		FechaEvento: utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento: utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 
 	return &flete
@@ -119,7 +119,7 @@ func ConvertToBLItem(src *model.BlItemTopic) *model.BlItem {
 		Observaciones:  topic.Observaciones,
 		CargaCnt:       topic.CargaCnt,
 		Evento:         utils.MapOperation(*src.Op),
-		FechaEvento:    utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento:    utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 
 	return &item
@@ -138,7 +138,7 @@ func ConvertToBLItemImo(src *model.BlItemImoTopic) *model.BlItemImo {
 		NumeroImo:   topic.NumeroImo,
 		BlItemID:    topic.BlItemID,
 		Evento:      utils.MapOperation(*src.Op),
-		FechaEvento: utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento: utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 
 	return &imo
@@ -166,7 +166,7 @@ func ConvertToBLItemContenedor(src *model.BlItemContenedorTopic) *model.BlItemCo
 		NombreOperador: topic.NombreOperador,
 		Estado:         topic.Estado,
 		Evento:         utils.MapOperation(*src.Op),
-		FechaEvento:    utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento:    utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 
 	return &cnt
@@ -185,7 +185,7 @@ func ConvertToBLItemContenedorImo(src *model.BlItemContenedorImoTopic) *model.Bl
 		NumeroImo:          topic.NumeroImo,
 		BlItemContenedorID: topic.BlItemContenedorID,
 		Evento:             utils.MapOperation(*src.Op),
-		FechaEvento:        utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento:        utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 
 	return &imo
@@ -205,7 +205,7 @@ func ConvertToBLItemContenedorSello(src *model.BlItemContenedorSelloTopic) *mode
 		Numero:             topic.Numero,
 		BlItemContenedorID: topic.BlItemContenedorID,
 		Evento:             utils.MapOperation(*src.Op),
-		FechaEvento:        utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento:        utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 
 	return &sello
@@ -226,7 +226,7 @@ func ConvertToBLLocacion(src *model.BlLocacionTopic) *model.BlLocacion {
 		Nombre:      topic.Nombre,
 		BlNroBl:     topic.BlNroBl,
 		Evento:      utils.MapOperation(*src.Op),
-		FechaEvento: utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento: utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 
 	return &loc
@@ -245,7 +245,7 @@ func ConvertToBLObservacion(src *model.BlObservacionTopic) *model.BlObservacion 
 		Nombre:      topic.Nombre,
 		BlNroBl:     topic.BlNroBl,
 		Evento:      utils.MapOperation(*src.Op),
-		FechaEvento: utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento: utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 
 	return &obs
@@ -275,7 +275,7 @@ func ConvertToBLParticipante(topic *model.BlParticipanteTopic) *model.BlParticip
 		ValorID:          participante.ValorID,
 		BlNroBl:          participante.BlNroBl,
 		Evento:           utils.MapOperation(*topic.Op),
-		FechaEvento:      utils.ToFormattedDateTime(topic.TsMS),
+		FechaEvento:      utils.ToFormattedDateTimeEvento(topic.TsMS),
 	}
 }
 
@@ -299,7 +299,7 @@ func ConvertToBLReferencia(src *model.BlReferenciaTopic) *model.BlReferencia {
 		ValorIDEmisor:  topic.ValorIDEmisor,
 		BlNroBl:        topic.BlNroBl,
 		Evento:         utils.MapOperation(*src.Op),
-		FechaEvento:    utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento:    utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 
 	return &ref
@@ -319,7 +319,7 @@ func ConvertToBLTransbordo(src *model.BlTransbordoTopic) *model.BlTransbordo {
 		FechaArribo:      utils.ToFormattedDateTime(topic.FechaArribo),
 		BlNroBl:          topic.BlNroBl,
 		Evento:           utils.MapOperation(*src.Op),
-		FechaEvento:      utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento:      utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 
 	return &t
@@ -337,7 +337,7 @@ func ConvertToBLTransporte(src *model.BlTransporteTopic) *model.BlTransporte {
 		SentidoOperacion: topic.SentidoOperacion,
 		BlNroBl:          topic.BlNroBl,
 		Evento:           utils.MapOperation(*src.Op),
-		FechaEvento:      utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento:      utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 
 	return &tr

@@ -20,7 +20,7 @@ func ReemplazarDetalle(factura *model.Factura, nuevoDetalle *model.FacturaDetall
 		return nil, fmt.Errorf("el nuevo detalle no puede ser nulo")
 	}
 
-	if factura.Evento != "CREATE" && (nuevoDetalle.Evento == nil || *nuevoDetalle.Evento != "CREATE") {
+	if factura.Evento != "CREATE" || (nuevoDetalle.Evento == nil || *nuevoDetalle.Evento != "CREATE") {
 		factura.IDMongo = primitive.NewObjectID()
 	}
 
@@ -55,8 +55,9 @@ func ReemplazarDetalle(factura *model.Factura, nuevoDetalle *model.FacturaDetall
 		}
 	}
 
-	if nuevoDetalle.Evento != nil && *nuevoDetalle.Evento != "DELETE" {
-		factura.Evento = *nuevoDetalle.Evento
+	factura.Evento = *nuevoDetalle.Evento
+	if nuevoDetalle.Evento != nil && *nuevoDetalle.Evento == "DELETE" {
+		factura.Evento = "UPDATE"
 	}
 	factura.FechaEvento = nuevoDetalle.FechaEvento
 	return factura, nil
