@@ -28,8 +28,8 @@ func ConvertToBL(src *model.BlTopic, base *model.BL) *model.BL {
 	bl.TipoServicio = topic.TipoServicio
 	bl.CondTransporte = topic.CondTransporte
 	bl.TotalBultos = topic.TotalBultos
-	val := utils.DecodeBinaryDecimal(topic.TotalPeso, 3)
-	bl.TotalPeso = &val
+
+	bl.TotalPeso = utils.DecodeBinaryDecimal(topic.TotalPeso, 3)
 	bl.UnidadPeso = topic.UnidadPeso
 	bl.TotalVolumen = utils.ParseToFloat(topic.TotalVolumen)
 	bl.UnidadVolumen = topic.UnidadVolumen
@@ -112,9 +112,9 @@ func ConvertToBLItem(src *model.BlItemTopic) *model.BlItem {
 		TipoBulto:      topic.TipoBulto,
 		Descripcion:    topic.Descripcion,
 		Cantidad:       topic.Cantidad,
-		PesoBruto:      func() *float64 { v := utils.DecodeBinaryDecimal(topic.PesoBruto, 3); return &v }(),
+		PesoBruto:      utils.DecodeBinaryDecimal(topic.PesoBruto, 3),
 		UnidadPeso:     topic.UnidadPeso,
-		Volumen:        func() *float64 { v := utils.DecodeBinaryDecimal(topic.Volumen, 2); return &v }(),
+		Volumen:        utils.DecodeBinaryDecimal(topic.Volumen, 2),
 		UnidadVolumen:  topic.UnidadVolumen,
 		Observaciones:  topic.Observaciones,
 		CargaCnt:       topic.CargaCnt,

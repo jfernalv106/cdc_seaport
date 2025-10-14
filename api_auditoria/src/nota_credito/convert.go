@@ -56,7 +56,7 @@ func ConvertToNotaCreditoServicio(src *model.NotaCreditoServTopic) *model.NotaCr
 		ID:            topic.ID,
 		IDNroNc:       topic.IDNroNc,
 		CodServ:       topic.CodServ,
-		ValorAplicado: func(v float64) *float64 { return &v }(utils.DecodeBinaryDecimal(topic.ValorAplicado, 2)),
+		ValorAplicado: utils.DecodeBinaryDecimal(topic.ValorAplicado, 2),
 		Visaje:        topic.Visaje,
 		DfID:          topic.DfID,
 		Evento:        utils.MapOperation(*src.Op),

@@ -11,10 +11,13 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-func DecodeBinaryDecimal(b64 *string, scale int32) float64 {
+func DecodeBinaryDecimal(b64 *string, scale int32) *float64 {
+	if b64 == nil {
+		return nil
+	}
 	raw, err := base64.StdEncoding.DecodeString(*b64)
 	if err != nil {
-		return 0
+		return nil
 	}
 
 	// two's complement → signed big.Int
@@ -28,7 +31,7 @@ func DecodeBinaryDecimal(b64 *string, scale int32) float64 {
 
 	dec := decimal.NewFromBigInt(n, -scale)
 	f, _ := dec.Float64()
-	return f
+	return &f
 }
 
 func ToStr(v *int64) *string {
@@ -43,15 +46,19 @@ func ToFormattedDateTimeEvento(ms *int64) *string {
 	if ms == nil {
 		return nil
 	}
-	// 1) Ancla el instante a UTC (ts_ms y las fechas de Debezium son epoch UTC)
-	tUTC := time.UnixMilli(*ms).UTC()
 
-	// 2) Conviértelo a tu zona para mostrar
+	// 1) Instante en UTC (epoch ms de Debezium es UTC)
+	t := time.UnixMilli(*ms)
+
+	// 2) Resta 3 horas (siempre 3h, independiente de DST)
+	t = t.Add(-3 * time.Hour)
+
+	// 3) Muestra en tu zona
 	loc, err := time.LoadLocation("America/Santiago")
 	if err != nil {
 		return nil
 	}
-	s := tUTC.In(loc).Format("2006-01-02 15:04:05")
+	s := t.In(loc).Format("2006-01-02 15:04:05")
 	return &s
 }
 func ToFormattedDateTime(ms *int64) *string {
