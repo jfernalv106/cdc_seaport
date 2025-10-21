@@ -21,7 +21,7 @@ func ConvertToNotaCredito(src *model.NotaCreditoTopic, nc *model.NotaCredito) *m
 		topic = *src.After
 	}
 	var fechaEvento *string
-	if *src.Op == "r" {
+	if *src.Op == "r" || *src.Op == "c" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
 		fechaEvento = utils.ToFormattedDateTimeEvento(src.TsMS)
@@ -60,6 +60,6 @@ func ConvertToNotaCreditoServicio(src *model.NotaCreditoServTopic) *model.NotaCr
 		Visaje:        topic.Visaje,
 		DfID:          topic.DfID,
 		Evento:        utils.MapOperation(*src.Op),
-		FechaEvento:   utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento:   utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 }

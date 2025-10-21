@@ -19,7 +19,7 @@ func ConvertToPapeletaRecepcion(src *model.PapeletaRecepcionTopic, papeleta *mod
 		topic = *src.After
 	}
 	var fechaEvento *string
-	if src.Op == "r" {
+	if src.Op == "r" || src.Op == "c" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
 		fechaEvento = utils.ToFormattedDateTimeEvento(src.TsMS)
@@ -48,19 +48,19 @@ func ConvertToPapeletaRecepcion(src *model.PapeletaRecepcionTopic, papeleta *mod
 		FechaCR:                  utils.ToFormattedDateTime(topic.FechaCR),
 		FechaUP:                  utils.ToFormattedDateTime(topic.FechaUp),
 		FechaDescon:              utils.ToFormattedDateTime(topic.FechaDescon),
-		Tipo:                     topic.Tipo,
-		PrePapeleta:              topic.PrePapeleta,
-		PesoManifestado:          utils.ToInt(topic.PesoManifestado),
-		Noty:                     topic.Noty,
-		NroPapeletaEmpresa:       topic.NroPapeletaEmpresa,
-		Aga:                      topic.Aga,
-		RutForw:                  topic.RutForw,
-		Liberada:                 topic.Liberada,
-		MotivoLiberacion:         topic.MotivoLiberacion,
-		VAnticipada:              topic.VAnticipada,
-		Evento:                   utils.MapOperation(src.Op),
-		FechaEvento:              fechaEvento,
-		Detalles:                 detalles,
+		//Tipo:                     topic.Tipo,
+		//PrePapeleta:              topic.PrePapeleta,
+		PesoManifestado:    utils.ToInt(topic.PesoManifestado),
+		Noty:               topic.Noty,
+		NroPapeletaEmpresa: topic.NroPapeletaEmpresa,
+		Aga:                topic.Aga,
+		RutForw:            topic.RutForw,
+		Liberada:           topic.Liberada,
+		MotivoLiberacion:   topic.MotivoLiberacion,
+		VAnticipada:        topic.VAnticipada,
+		Evento:             utils.MapOperation(src.Op),
+		FechaEvento:        fechaEvento,
+		Detalles:           detalles,
 	}
 }
 func ConvertToPapeletaRecepcionDetalle(
@@ -89,6 +89,6 @@ func ConvertToPapeletaRecepcionDetalle(
 		Chassis:       topic.Chassis,
 		Identificador: topic.Identificador,
 		Evento:        utils.MapOperation(src.Op),
-		FechaEvento:   utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento:   utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 }

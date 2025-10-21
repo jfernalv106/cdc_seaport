@@ -21,7 +21,7 @@ func ConvertToPapeletaExpo(src *model.PapeletaExpoTopic, papeleta *model.Papelet
 		topic = *src.After
 	}
 	var fechaEvento *string
-	if src.Op == "r" {
+	if src.Op == "r" || src.Op == "c" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
 		fechaEvento = utils.ToFormattedDateTimeEvento(&src.TsMS)
@@ -99,7 +99,7 @@ func ConvertToPapeletaExpoDetalle(
 		Chassis:    topic.Chassis,
 		Situacion:  topic.Situacion,
 
-		FechaEvento: utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento: utils.ToFormattedDateTimeEvento(src.TsMS),
 		Evento: utils.MapOperation(func(s *string) string {
 			if s != nil {
 				return *s

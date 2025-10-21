@@ -15,7 +15,7 @@ func ConvertToFactura(src *model.FacturaTopic, factura *model.Factura) *model.Fa
 		topic = *src.After
 	}
 	var fechaEvento *string
-	if src.Op == "r" {
+	if src.Op == "r" || src.Op == "c" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
 		fechaEvento = utils.ToFormattedDateTimeEvento(src.TsMS)
@@ -102,6 +102,6 @@ func ConvertToFacturaDetalle(
 		VisajeVa:        topic.VisajeVa,
 		DiasReales:      topic.DiasReales,
 		Evento:          func(s string) *string { return &s }(utils.MapOperation(src.Op)),
-		FechaEvento:     utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento:     utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 }

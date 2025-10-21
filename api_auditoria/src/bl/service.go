@@ -93,9 +93,13 @@ func (s *service) GuardarBl(topic model.BlTopic) (interface{}, error) {
 	} else {
 		id = *topic.Before.ID
 	}
+
 	base, _ := s.repo.GetUltimoPorId(&id)
 	bl := ConvertToBL(&topic, base)
-	return s.repo.Guardar(bl)
+	if bl.Estado != nil && *bl.Estado == "ACTIVO" {
+		return s.repo.Guardar(bl)
+	}
+	return bl, nil
 }
 
 func (s *service) GuardarBlFecha(topic model.BlFechaTopic) (interface{}, error) {
@@ -348,9 +352,10 @@ func (s *service) AgruparBlFecha() {
 
 	for _, d := range fechas {
 		if d.BlNroBl != nil {
-			px, err := s.repo.GetUltimoPorId(*&d.BlNroBl)
+			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
+				s.BorraBlFecha(d.IDMongo.Hex())
 				continue
 			}
 			if px == nil {
@@ -388,6 +393,7 @@ func (s *service) AgruparBlFlete() {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
+				s.BorraBlFlete(d.IDMongo.Hex())
 				continue
 			}
 			if px == nil {
@@ -434,6 +440,7 @@ func (s *service) AgruparBlItem() {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
+				s.BorraBlItem(d.IDMongo.Hex())
 				continue
 			}
 			if px == nil {
@@ -478,9 +485,10 @@ func (s *service) AgruparBlReferencia() {
 
 	for _, d := range referencias {
 		if d.BlNroBl != nil {
-			px, err := s.repo.GetUltimoPorId(*&d.BlNroBl)
+			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
+				s.BorraBlReferencia(d.IDMongo.Hex())
 				continue
 			}
 			if px == nil {
@@ -528,6 +536,7 @@ func (s *service) AgruparBlTransbordo() {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
+				s.BorraBlTransbordo(d.IDMongo.Hex())
 				continue
 			}
 			if px == nil {
@@ -575,6 +584,7 @@ func (s *service) AgruparBlTransporte() {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
+				s.BorraBlTransporte(d.IDMongo.Hex())
 				continue
 			}
 			if px == nil {
@@ -626,6 +636,7 @@ func (s *service) AgruparBlLocacion() {
 			}
 			if px == nil {
 				fmt.Println("no se encontró BL con id:", *d.BlNroBl)
+				s.BorraBlLocacion(d.IDMongo.Hex())
 				continue
 			}
 			pxActualizada, err := ReemplazarBlLocacion(px, *d)
@@ -669,6 +680,7 @@ func (s *service) AgruparBlObservacion() {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
+				s.BorraBlObservacion(d.IDMongo.Hex())
 				continue
 			}
 			if px == nil {
@@ -713,9 +725,10 @@ func (s *service) AgruparBlParticipante() {
 
 	for _, d := range participantes {
 		if d.BlNroBl != nil {
-			px, err := s.repo.GetUltimoPorId(*&d.BlNroBl)
+			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
+				s.BorraBlParticipante(d.IDMongo.Hex())
 				continue
 			}
 			if px == nil {
@@ -765,6 +778,7 @@ func (s *service) AgruparBlItemImo() {
 			px, err := s.repo.GetUltimoPorIdItem(d.BlItemID)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
+				s.BorraBlItemImo(d.IDMongo.Hex())
 				continue
 			}
 			if px == nil {
@@ -820,6 +834,7 @@ func (s *service) AgruparBlItemContenedor() {
 			px, err := s.repo.GetUltimoPorIdItem(d.BlItemID)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
+				s.BorraBlItemContenedor(d.IDMongo.Hex())
 				continue
 			}
 			if px == nil {
@@ -875,6 +890,7 @@ func (s *service) AgruparBlItemContenedorImo() {
 			cnt, err := s.repo.GetUltimoPorIdItemContenedor(d.BlItemContenedorID)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
+				s.BorraBlItemContenedorImo(d.IDMongo.Hex())
 				continue
 			}
 			if cnt == nil {
@@ -940,6 +956,7 @@ func (s *service) AgruparBlItemContenedorSello() {
 			cnt, err := s.repo.GetUltimoPorIdItemContenedor(d.BlItemContenedorID)
 			if err != nil {
 				fmt.Println("error GetUltimoPorIdItemContenedor:", err)
+				s.BorraBlItemContenedorSello(d.IDMongo.Hex())
 				continue
 			}
 			if cnt == nil {

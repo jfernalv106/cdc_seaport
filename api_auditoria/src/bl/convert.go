@@ -46,7 +46,7 @@ func ConvertToBL(src *model.BlTopic, base *model.BL) *model.BL {
 	bl.Etiqueta = topic.Etiqueta
 	bl.Aforo = topic.Aforo
 	bl.Evento = utils.MapOperation(*src.Op)
-	if *src.Op == "r" {
+	if *src.Op == "r" || *src.Op == "c" {
 		bl.FechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
 		bl.FechaEvento = utils.ToFormattedDateTimeEvento(src.TsMS)

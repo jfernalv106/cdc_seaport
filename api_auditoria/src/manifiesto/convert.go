@@ -14,7 +14,7 @@ func ConvertManifiestoTopicToManifiesto(topic *model.ManifiestoTopic) *model.Man
 		sourceManifiesto = *topic.After
 	}
 	var fechaEvento *string
-	if topic.Op == "r" {
+	if topic.Op == "r" || topic.Op == "c" {
 		fechaEvento = utils.ToFormattedDateTime(sourceManifiesto.FechaCR)
 	} else {
 		fechaEvento = utils.ToFormattedDateTimeEvento(topic.TsMS)

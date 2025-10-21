@@ -26,7 +26,7 @@ func TransformMercanciasDespachadas(src *model.MercanciasDespachadasTopic) *mode
 		Bulto:             nil,
 		UsuarioCR:         topic.UsuarioCR,
 		Evento:            utils.MapOperation(src.Op),
-		FechaEvento:       utils.ToFormattedDateTime(src.TsMS),
+		FechaEvento:       utils.ToFormattedDateTimeEvento(src.TsMS),
 	}
 }
 
@@ -38,7 +38,7 @@ func TransformVisacion(src *model.VisacionTopic, visacion *model.Visacion) *mode
 		topic = *src.After
 	}
 	var fechaEvento *string
-	if src.Op == "r" {
+	if src.Op == "r" || src.Op == "c" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
 		fechaEvento = utils.ToFormattedDateTimeEvento(src.TsMS)

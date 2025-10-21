@@ -51,7 +51,7 @@ func ToFormattedDateTimeEvento(ms *int64) *string {
 	t := time.UnixMilli(*ms)
 
 	// 2) Resta 3 horas (siempre 3h, independiente de DST)
-	t = t.Add(-3 * time.Hour)
+	//t = t.Add(-3 * time.Hour)
 
 	// 3) Muestra en tu zona
 	loc, err := time.LoadLocation("America/Santiago")

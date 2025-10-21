@@ -13,7 +13,7 @@ func TransformDespacho(t *model.DespachoTopic, visacion *model.Despacho) *model.
 		topic = *t.After
 	}
 	var fechaEvento *string
-	if t.Op == "r" {
+	if t.Op == "r" || t.Op == "c" {
 		fechaEvento = utils.ToFormattedDateTime(topic.FechaCR)
 	} else {
 		fechaEvento = utils.ToFormattedDateTimeEvento(t.TsMS)
