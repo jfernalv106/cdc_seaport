@@ -354,12 +354,12 @@ func (s *service) AgruparBlFecha() {
 		if d.BlNroBl != nil {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
-				fmt.Println("error GetUltimoPorId:", err)
-				s.BorraBlFecha(d.IDMongo.Hex())
+				fmt.Println("error GetUltimoPorId AgruparBlFecha:", err)
+
 				continue
 			}
 			if px == nil {
-				fmt.Println("no se encontró BL con id:", *d.BlNroBl)
+				fmt.Println("no se encontró BL con id AgruparBlFecha:", *d.BlNroBl)
 				continue
 			}
 			pxActualizada, err := ReemplazarBlFecha(px, *d)
@@ -367,12 +367,21 @@ func (s *service) AgruparBlFecha() {
 				fmt.Println("error ReemplazarBlFecha:", err)
 				continue
 			}
-			_, err = s.repo.Guardar(*pxActualizada)
-			s.BorraBlFecha(d.IDMongo.Hex())
-			if err != nil {
-				fmt.Println("error Guardar BL:", err)
+			if *px.FechaUp == *d.FechaTraspaso {
+				_, err = s.repo.ActualizaBl(pxActualizada.IDMongo.Hex(), pxActualizada)
+				if err != nil {
+					fmt.Println("error Actualizar BL AgruparBlFecha:", err)
+					continue
+				}
+				s.BorraBlFecha(d.IDMongo.Hex())
 				continue
 			}
+			_, err = s.repo.Guardar(*pxActualizada)
+			if err != nil {
+				fmt.Println("error Guardar BL AgruparBlFecha:", err)
+				continue
+			}
+			s.BorraBlFecha(d.IDMongo.Hex())
 			fmt.Println("BL fecha agregado a BL ID:", *d.BlNroBl)
 		}
 	}
@@ -392,12 +401,12 @@ func (s *service) AgruparBlFlete() {
 		if d.BlNroBl != nil {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
-				fmt.Println("error GetUltimoPorId:", err)
-				s.BorraBlFlete(d.IDMongo.Hex())
+				fmt.Println("error GetUltimoPorId AgruparBlFlete:", err)
+
 				continue
 			}
 			if px == nil {
-				fmt.Println("no se encontró BL con id:", *d.BlNroBl)
+				fmt.Println("no se encontró BL con id AgruparBlFlete:", *d.BlNroBl)
 				continue
 			}
 			pxActualizada, err := ReemplazarBlFlete(px, *d)
@@ -405,22 +414,24 @@ func (s *service) AgruparBlFlete() {
 				fmt.Println("error ReemplazarBlFecha:", err)
 				continue
 			}
-			if d.Evento == "CREATE" && px.Evento == "CREATE" {
+			if *px.FechaUp == *d.FechaTraspaso {
 				_, err = s.repo.ActualizaBl(pxActualizada.IDMongo.Hex(), pxActualizada)
 				if err != nil {
-					fmt.Println("error Guardar BL:", err)
+					fmt.Println("error Actualizar BL ReemplazarBlFlete:", err)
 					continue
 				}
-			} else {
-
-				_, err = s.repo.Guardar(*pxActualizada)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+				s.BorraBlFlete(d.IDMongo.Hex())
+				continue
 			}
+
+			_, err = s.repo.Guardar(*pxActualizada)
+			if err != nil {
+				fmt.Println("error Guardar BL AgruparBlFlete:", err)
+				continue
+			}
+
 			s.BorraBlFlete(d.IDMongo.Hex())
-			fmt.Println("BL fecha agregado a BL ID:", *d.BlNroBl)
+			fmt.Println("BL fecha agregado a BL AgruparBlFlete ID:", *d.BlNroBl)
 		}
 	}
 
@@ -440,7 +451,7 @@ func (s *service) AgruparBlItem() {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
-				s.BorraBlItem(d.IDMongo.Hex())
+
 				continue
 			}
 			if px == nil {
@@ -452,20 +463,22 @@ func (s *service) AgruparBlItem() {
 				fmt.Println("error ReemplazarBlItem:", err)
 				continue
 			}
-			if d.Evento == "CREATE" && px.Evento == "CREATE" {
+			if *px.FechaUp == *d.FechaTraspaso {
 				_, err = s.repo.ActualizaBl(pxActualizada.IDMongo.Hex(), pxActualizada)
 				if err != nil {
-					fmt.Println("error Guardar BL:", err)
+					fmt.Println("error Guardar BL ReemplazarBlFlete:", err)
 					continue
 				}
-			} else {
-
-				_, err = s.repo.Guardar(*pxActualizada)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+				s.BorraBlItem(d.IDMongo.Hex())
+				continue
 			}
+
+			_, err = s.repo.Guardar(*pxActualizada)
+			if err != nil {
+				fmt.Println("error Guardar BL:", err)
+				continue
+			}
+
 			s.BorraBlItem(d.IDMongo.Hex())
 
 			fmt.Println("BL fecha agregado a BL ID:", *d.BlNroBl)
@@ -488,7 +501,7 @@ func (s *service) AgruparBlReferencia() {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
-				s.BorraBlReferencia(d.IDMongo.Hex())
+
 				continue
 			}
 			if px == nil {
@@ -500,20 +513,22 @@ func (s *service) AgruparBlReferencia() {
 				fmt.Println("error ReemplazarBlReferencia:", err)
 				continue
 			}
-			if d.Evento == "CREATE" && px.Evento == "CREATE" {
+			if *px.FechaUp == *d.FechaTraspaso {
 				_, err = s.repo.ActualizaBl(pxActualizada.IDMongo.Hex(), pxActualizada)
 				if err != nil {
-					fmt.Println("error Guardar BL:", err)
+					fmt.Println("error Guardar BL ReemplazarBlReferencia:", err)
 					continue
 				}
-			} else {
-
-				_, err = s.repo.Guardar(*pxActualizada)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+				s.BorraBlReferencia(d.IDMongo.Hex())
+				continue
 			}
+
+			_, err = s.repo.Guardar(*pxActualizada)
+			if err != nil {
+				fmt.Println("error Guardar BL:", err)
+				continue
+			}
+
 			s.BorraBlReferencia(d.IDMongo.Hex())
 
 			fmt.Println("BL fecha agregado a BL ID:", *d.BlNroBl)
@@ -536,7 +551,7 @@ func (s *service) AgruparBlTransbordo() {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
-				s.BorraBlTransbordo(d.IDMongo.Hex())
+
 				continue
 			}
 			if px == nil {
@@ -548,20 +563,22 @@ func (s *service) AgruparBlTransbordo() {
 				fmt.Println("error ReemplazarBlReferencia:", err)
 				continue
 			}
-			if d.Evento == "CREATE" && px.Evento == "CREATE" {
+			if *px.FechaUp == *d.FechaTraspaso {
 				_, err = s.repo.ActualizaBl(pxActualizada.IDMongo.Hex(), pxActualizada)
 				if err != nil {
-					fmt.Println("error Guardar BL:", err)
+					fmt.Println("error Guardar BL ReemplazarBlReferencia:", err)
 					continue
 				}
-			} else {
-
-				_, err = s.repo.Guardar(*pxActualizada)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+				s.BorraBlTransbordo(d.IDMongo.Hex())
+				continue
 			}
+
+			_, err = s.repo.Guardar(*pxActualizada)
+			if err != nil {
+				fmt.Println("error Guardar BL:", err)
+				continue
+			}
+
 			s.BorraBlTransbordo(d.IDMongo.Hex())
 
 			fmt.Println("BL fecha agregado a BL ID:", *d.BlNroBl)
@@ -584,7 +601,7 @@ func (s *service) AgruparBlTransporte() {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
-				s.BorraBlTransporte(d.IDMongo.Hex())
+
 				continue
 			}
 			if px == nil {
@@ -596,23 +613,25 @@ func (s *service) AgruparBlTransporte() {
 				fmt.Println("error ReemplazarBlTransporte:", err)
 				continue
 			}
-			if d.Evento == "CREATE" && px.Evento == "CREATE" {
+			if *px.FechaUp == *d.FechaTraspaso {
 				_, err = s.repo.ActualizaBl(pxActualizada.IDMongo.Hex(), pxActualizada)
 				if err != nil {
-					fmt.Println("error Guardar BL:", err)
+					fmt.Println("error Guardar BL ReemplazarBlTransporte:", err)
 					continue
 				}
-			} else {
-
-				_, err = s.repo.Guardar(*pxActualizada)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+				s.BorraBlTransporte(d.IDMongo.Hex())
+				continue
 			}
+
+			_, err = s.repo.Guardar(*pxActualizada)
+			if err != nil {
+				fmt.Println("error Guardar BL ReemplazarBlTransporte:", err)
+				continue
+			}
+
 			s.BorraBlTransporte(d.IDMongo.Hex())
 
-			fmt.Println("BL fecha agregado a BL ID:", *d.BlNroBl)
+			fmt.Println("BL ReemplazarBlTransporte agregado a BL ID:", *d.BlNroBl)
 		}
 	}
 
@@ -636,7 +655,7 @@ func (s *service) AgruparBlLocacion() {
 			}
 			if px == nil {
 				fmt.Println("no se encontró BL con id:", *d.BlNroBl)
-				s.BorraBlLocacion(d.IDMongo.Hex())
+
 				continue
 			}
 			pxActualizada, err := ReemplazarBlLocacion(px, *d)
@@ -644,23 +663,25 @@ func (s *service) AgruparBlLocacion() {
 				fmt.Println("error ReemplazarBlTransporte:", err)
 				continue
 			}
-			if d.Evento == "CREATE" && px.Evento == "CREATE" {
+			if *px.FechaUp == *d.FechaTraspaso {
 				_, err = s.repo.ActualizaBl(pxActualizada.IDMongo.Hex(), pxActualizada)
 				if err != nil {
-					fmt.Println("error Guardar BL:", err)
+					fmt.Println("error Guardar BL ReemplazarBlLocacion:", err)
 					continue
 				}
-			} else {
-
-				_, err = s.repo.Guardar(*pxActualizada)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+				s.BorraBlLocacion(d.IDMongo.Hex())
+				continue
 			}
+
+			_, err = s.repo.Guardar(*pxActualizada)
+			if err != nil {
+				fmt.Println("error Guardar BL ReemplazarBlLocacion:", err)
+				continue
+			}
+
 			s.BorraBlLocacion(d.IDMongo.Hex())
 
-			fmt.Println("BL fecha agregado a BL ID:", *d.BlNroBl)
+			fmt.Println("BL ReemplazarBlLocacion a BL ID:", *d.BlNroBl)
 		}
 	}
 
@@ -680,7 +701,7 @@ func (s *service) AgruparBlObservacion() {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
-				s.BorraBlObservacion(d.IDMongo.Hex())
+
 				continue
 			}
 			if px == nil {
@@ -692,20 +713,22 @@ func (s *service) AgruparBlObservacion() {
 				fmt.Println("error ReemplazarBlObservacion:", err)
 				continue
 			}
-			if d.Evento == "CREATE" && px.Evento == "CREATE" {
+			if *px.FechaUp == *d.FechaTraspaso {
 				_, err = s.repo.ActualizaBl(pxActualizada.IDMongo.Hex(), pxActualizada)
 				if err != nil {
-					fmt.Println("error Guardar BL:", err)
+					fmt.Println("error Guardar BL ReemplazarBlObservacion:", err)
 					continue
 				}
-			} else {
-
-				_, err = s.repo.Guardar(*pxActualizada)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+				s.BorraBlObservacion(d.IDMongo.Hex())
+				continue
 			}
+
+			_, err = s.repo.Guardar(*pxActualizada)
+			if err != nil {
+				fmt.Println("error Guardar ReemplazarBlObservacion BL:", err)
+				continue
+			}
+
 			s.BorraBlObservacion(d.IDMongo.Hex())
 
 			fmt.Println("BL fecha agregado a BL ID:", *d.BlNroBl)
@@ -728,7 +751,7 @@ func (s *service) AgruparBlParticipante() {
 			px, err := s.repo.GetUltimoPorId(d.BlNroBl)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
-				s.BorraBlParticipante(d.IDMongo.Hex())
+
 				continue
 			}
 			if px == nil {
@@ -740,20 +763,21 @@ func (s *service) AgruparBlParticipante() {
 				fmt.Println("error ReemplazarBlObservacion:", err)
 				continue
 			}
-			if d.Evento == "CREATE" && px.Evento == "CREATE" {
+			if *px.FechaUp == *d.FechaTraspaso {
 				_, err = s.repo.ActualizaBl(pxActualizada.IDMongo.Hex(), pxActualizada)
 				if err != nil {
-					fmt.Println("error Guardar BL:", err)
+					fmt.Println("error Guardar BL ReemplazarBlParticipante:", err)
 					continue
 				}
-			} else {
-
-				_, err = s.repo.Guardar(*pxActualizada)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+				s.BorraBlParticipante(d.IDMongo.Hex())
+				continue
 			}
+			_, err = s.repo.Guardar(*pxActualizada)
+			if err != nil {
+				fmt.Println("error Guardar BL:", err)
+				continue
+			}
+
 			s.BorraBlParticipante(d.IDMongo.Hex())
 
 			fmt.Println("BL fecha agregado a BL ID:", *d.BlNroBl)
@@ -778,7 +802,7 @@ func (s *service) AgruparBlItemImo() {
 			px, err := s.repo.GetUltimoPorIdItem(d.BlItemID)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
-				s.BorraBlItemImo(d.IDMongo.Hex())
+
 				continue
 			}
 			if px == nil {
@@ -798,20 +822,22 @@ func (s *service) AgruparBlItemImo() {
 			if err != nil {
 				fmt.Println("GetUltimoPorId ReemplazarBlItem   :", *d.BlItemID)
 			}
-			if d.Evento == "CREATE" && bl.Evento == "CREATE" {
+			if *bl.FechaUp == *d.FechaTraspaso {
 				_, err = s.repo.ActualizaBl(bl.IDMongo.Hex(), bl)
 				if err != nil {
-					fmt.Println("error Guardar BL:", err)
+					fmt.Println("error Guardar BL AgruparBlItemImo:", err)
 					continue
 				}
-			} else {
-
-				_, err = s.repo.Guardar(*bl)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+				s.BorraBlItemImo(d.IDMongo.Hex())
+				continue
 			}
+
+			_, err = s.repo.Guardar(*bl)
+			if err != nil {
+				fmt.Println("error Guardar BL:", err)
+				continue
+			}
+
 			s.BorraBlItemImo(d.IDMongo.Hex())
 
 			fmt.Println("BL Item IMO agregado a BL ID:", *d.BlItemID)
@@ -823,25 +849,25 @@ func (s *service) AgruparBlItemContenedor() {
 
 	fmt.Println("agrupando Item Contenedor...", time.Now().Format("2006-01-02T15:04:05"))
 	fmt.Println(time.Now().Format("2006-01-02T15:04:05"))
-	imos, err := s.GetBlItemContenedorAll()
+	cnt, err := s.GetBlItemContenedorAll()
+	fmt.Println(" Trae contenedores:", err)
 	if err != nil {
 		fmt.Println("error GetBlItemContenedorAll:", err)
 		return
 	}
 
-	for _, d := range imos {
+	for _, d := range cnt {
 		if d.BlItemID != nil {
-			px, err := s.repo.GetUltimoPorIdItem(d.BlItemID)
+			item, err := s.repo.GetUltimoPorIdItem(d.BlItemID)
 			if err != nil {
-				fmt.Println("error GetUltimoPorId:", err)
-				s.BorraBlItemContenedor(d.IDMongo.Hex())
+				fmt.Println("error GetUltimoItemPorId:", err)
 				continue
 			}
-			if px == nil {
+			if item == nil {
 				fmt.Println("no se encontró BL Item con item id:", *d.BlItemID)
 				continue
 			}
-			itemActualizado, err := ReemplazarBlItemContenedor(px, *d)
+			itemActualizado, err := ReemplazarBlItemContenedor(item, *d)
 			if err != nil {
 				fmt.Println("error ReemplazarBlItemContenedor:", err)
 				continue
@@ -854,20 +880,13 @@ func (s *service) AgruparBlItemContenedor() {
 			if err != nil {
 				fmt.Println("GetUltimoPorId ReemplazarBlItem   :", *d.BlItemID)
 			}
-			if d.Evento == "CREATE" && bl.Evento == "CREATE" {
-				_, err = s.repo.ActualizaBl(bl.IDMongo.Hex(), bl)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
-			} else {
 
-				_, err = s.repo.Guardar(*bl)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+			_, err = s.repo.ActualizaBl(bl.IDMongo.Hex(), bl)
+			if err != nil {
+				fmt.Println("error Guardar BL AgruparBlItemContenedor:", err)
+				continue
 			}
+
 			s.BorraBlItemContenedor(d.IDMongo.Hex())
 
 			fmt.Println("BL Item Contenedor agregado a BL ID:", *d.BlItemID)
@@ -890,7 +909,7 @@ func (s *service) AgruparBlItemContenedorImo() {
 			cnt, err := s.repo.GetUltimoPorIdItemContenedor(d.BlItemContenedorID)
 			if err != nil {
 				fmt.Println("error GetUltimoPorId:", err)
-				s.BorraBlItemContenedorImo(d.IDMongo.Hex())
+
 				continue
 			}
 			if cnt == nil {
@@ -917,24 +936,18 @@ func (s *service) AgruparBlItemContenedorImo() {
 			if err != nil {
 				fmt.Println("GetUltimoPorId AgruparBlItemImo:", *d.BlItemContenedorID)
 			}
+
 			bl, err := ReemplazarBlItem(b, *itemActualizado)
 			if err != nil {
 				fmt.Println("GetUltimoPorId ReemplazarBlItem   :", *d.BlItemContenedorID)
 			}
-			if d.Evento == "CREATE" && bl.Evento == "CREATE" {
-				_, err = s.repo.ActualizaBl(bl.IDMongo.Hex(), bl)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
-			} else {
-
-				_, err = s.repo.Guardar(*bl)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+			/*Actualiza BL */
+			_, err = s.repo.ActualizaBl(bl.IDMongo.Hex(), bl)
+			if err != nil {
+				fmt.Println("error Guardar BL AgruparBlItemImo:", err)
+				continue
 			}
+
 			s.BorraBlItemContenedorImo(d.IDMongo.Hex())
 
 			fmt.Println("BL Item Contenedor imo agregado a BL ID:", *d.BlItemContenedorID)
@@ -956,7 +969,7 @@ func (s *service) AgruparBlItemContenedorSello() {
 			cnt, err := s.repo.GetUltimoPorIdItemContenedor(d.BlItemContenedorID)
 			if err != nil {
 				fmt.Println("error GetUltimoPorIdItemContenedor:", err)
-				s.BorraBlItemContenedorSello(d.IDMongo.Hex())
+
 				continue
 			}
 			if cnt == nil {
@@ -987,20 +1000,13 @@ func (s *service) AgruparBlItemContenedorSello() {
 			if err != nil {
 				fmt.Println("GetUltimoPorId ReemplazarBlItem   :", *d.BlItemContenedorID)
 			}
-			if d.Evento == "CREATE" && bl.Evento == "CREATE" {
-				_, err = s.repo.ActualizaBl(bl.IDMongo.Hex(), bl)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
-			} else {
 
-				_, err = s.repo.Guardar(*bl)
-				if err != nil {
-					fmt.Println("error Guardar BL:", err)
-					continue
-				}
+			_, err = s.repo.ActualizaBl(bl.IDMongo.Hex(), bl)
+			if err != nil {
+				fmt.Println("error Guardar BL AgruparBlItemImo:", err)
+				continue
 			}
+
 			s.BorraBlItemContenedorSello(d.IDMongo.Hex())
 
 			fmt.Println("BL Item Contenedor Sello agregado a BL ID:", *d.BlItemContenedorID)

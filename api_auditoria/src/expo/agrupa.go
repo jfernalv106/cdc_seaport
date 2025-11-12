@@ -55,7 +55,7 @@ func ReemplazarDetalle(papeleta *model.PapeletaExpo, nuevoDetalle *model.Papelet
 	}
 
 	papeleta.Evento = nuevoDetalle.Evento
-	if nuevoDetalle.Evento == "DELETE" {
+	if nuevoDetalle.Evento == "DELETE" || nuevoDetalle.Evento == "CREATE" {
 		papeleta.Evento = "UPDATE"
 	}
 	papeleta.FechaEvento = nuevoDetalle.FechaEvento

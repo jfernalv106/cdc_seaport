@@ -52,10 +52,11 @@ type BlFechaTopic struct {
 }
 
 type BlFechaT struct {
-	ID      *int64  `json:"id,omitempty"`
-	Nombre  *string `json:"nombre,omitempty"`
-	Valor   *int64  `json:"valor,omitempty"`
-	BlNroBl *int64  `json:"bl_nro_bl,omitempty"`
+	ID            *int64  `json:"id,omitempty"`
+	Nombre        *string `json:"nombre,omitempty"`
+	Valor         *int64  `json:"valor,omitempty"`
+	BlNroBl       *int64  `json:"bl_nro_bl,omitempty"`
+	FechaTraspaso *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**BL Flete**/
@@ -69,9 +70,10 @@ type BlFleteTopic struct {
 }
 
 type BlFleteT struct {
-	Descripcion *string `json:"descripcion"`
-	Tipo        *string `json:"tipo,omitempty"`
-	BlNroBl     *int64  `json:"bl_nro_bl,omitempty"`
+	Descripcion   *string `json:"descripcion"`
+	Tipo          *string `json:"tipo,omitempty"`
+	BlNroBl       *int64  `json:"bl_nro_bl,omitempty"`
+	FechaTraspaso *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**BL Item_Imo**/
@@ -85,10 +87,11 @@ type BlItemImoTopic struct {
 }
 
 type BlItemImoT struct {
-	ID        *int64  `json:"id,omitempty"`
-	ClaseImo  *string `json:"clase_imo,omitempty"`
-	NumeroImo *int64  `json:"numero_imo,omitempty"`
-	BlItemID  *int64  `json:"bl_item_id,omitempty"`
+	ID            *int64  `json:"id,omitempty"`
+	ClaseImo      *string `json:"clase_imo,omitempty"`
+	NumeroImo     *int64  `json:"numero_imo,omitempty"`
+	BlItemID      *int64  `json:"bl_item_id,omitempty"`
+	FechaTraspaso *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**BL Item**/
@@ -116,6 +119,7 @@ type BlItemT struct {
 	UnidadVolumen  *string `json:"unidad_volumen,omitempty"`
 	Observaciones  *string `json:"observaciones"`
 	CargaCnt       *string `json:"carga_cnt"`
+	FechaTraspaso  *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**BL Item Contenedor**/
@@ -140,6 +144,7 @@ type BlItemContenedorT struct {
 	ValorIDOp      *string `json:"valor_id_op"`
 	NombreOperador *string `json:"nombre_operador,omitempty"`
 	Estado         *string `json:"estado,omitempty"`
+	FechaTraspaso  *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**Bl Item Contenedor Imo**/
@@ -157,6 +162,7 @@ type BlItemContenedorImoT struct {
 	ClaseImo           *string `json:"clase_imo,omitempty"`
 	NumeroImo          *int64  `json:"numero_imo,omitempty"`
 	BlItemContenedorID *int64  `json:"bl_item_contenedor_id,omitempty"`
+	FechaTraspaso      *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**Bl Item Contenedor Sello**/
@@ -176,6 +182,7 @@ type BlItemContenedorSelloT struct {
 	Emisor             *string `json:"emisor,omitempty"`
 	Numero             *string `json:"numero,omitempty"`
 	BlItemContenedorID *int64  `json:"bl_item_contenedor_id,omitempty"`
+	FechaTraspaso      *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**Bl Locacion**/
@@ -190,11 +197,12 @@ type BlLocacionTopic struct {
 }
 
 type BlLocacionT struct {
-	ID          *int64  `json:"id,omitempty"`
-	Codigo      *string `json:"codigo,omitempty"`
-	Descripcion *string `json:"descripcion,omitempty"`
-	Nombre      *string `json:"nombre,omitempty"`
-	BlNroBl     *int64  `json:"bl_nro_bl,omitempty"`
+	ID            *int64  `json:"id,omitempty"`
+	Codigo        *string `json:"codigo,omitempty"`
+	Descripcion   *string `json:"descripcion,omitempty"`
+	Nombre        *string `json:"nombre,omitempty"`
+	BlNroBl       *int64  `json:"bl_nro_bl,omitempty"`
+	FechaTraspaso *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**Bl Observacion**/
@@ -208,10 +216,11 @@ type BlObservacionTopic struct {
 }
 
 type BlObservacionT struct {
-	ID        *int64  `json:"id,omitempty"`
-	Contenido *string `json:"contenido,omitempty"`
-	Nombre    *string `json:"nombre,omitempty"`
-	BlNroBl   *int64  `json:"bl_nro_bl,omitempty"`
+	ID            *int64  `json:"id,omitempty"`
+	Contenido     *string `json:"contenido,omitempty"`
+	Nombre        *string `json:"nombre,omitempty"`
+	BlNroBl       *int64  `json:"bl_nro_bl,omitempty"`
+	FechaTraspaso *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**BL Participante**/
@@ -238,6 +247,7 @@ type BlParticipanteT struct {
 	TipoParticipante *string `json:"tipo_participante,omitempty"`
 	ValorID          *string `json:"valor_id"`
 	BlNroBl          *int64  `json:"bl_nro_bl,omitempty"`
+	FechaTraspaso    *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**BL Referencia**/
@@ -261,6 +271,7 @@ type BlReferenciaT struct {
 	TipoReferencia *string `json:"tipo_referencia,omitempty"`
 	ValorIDEmisor  *string `json:"valor_id_emisor,omitempty"`
 	BlNroBl        *int64  `json:"bl_nro_bl,omitempty"`
+	FechaTraspaso  *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**BL Transbordo**/
@@ -279,6 +290,7 @@ type BlTransbordoT struct {
 	DescripcionLugar *string `json:"descripcion_lugar,omitempty"`
 	FechaArribo      *int64  `json:"fecha_arribo"`
 	BlNroBl          *int64  `json:"bl_nro_bl,omitempty"`
+	FechaTraspaso    *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**BL Transporte**/
@@ -295,6 +307,7 @@ type BlTransporteT struct {
 	NombreNave       *string `json:"nombre_nave,omitempty"`
 	SentidoOperacion *string `json:"sentido_operacion,omitempty"`
 	BlNroBl          *int64  `json:"bl_nro_bl,omitempty"`
+	FechaTraspaso    *int64  `json:"fecha_traspaso,omitempty"`
 }
 
 /**BL Modelo**/
@@ -341,34 +354,37 @@ type BL struct {
 }
 
 type BlFecha struct {
-	IDMongo     primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	ID          *int64             `json:"id,omitempty" bson:"id,omitempty"`
-	Nombre      *string            `json:"nombre,omitempty" bson:"nombre,omitempty"`
-	Valor       *string            `json:"valor,omitempty" bson:"valor,omitempty"`
-	BlNroBl     *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
-	Evento      string             `json:"evento,omitempty" bson:"evento,omitempty"`
-	FechaEvento *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	IDMongo       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	ID            *int64             `json:"id,omitempty" bson:"id,omitempty"`
+	Nombre        *string            `json:"nombre,omitempty" bson:"nombre,omitempty"`
+	Valor         *string            `json:"valor,omitempty" bson:"valor,omitempty"`
+	BlNroBl       *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
+	Evento        string             `json:"evento,omitempty" bson:"evento,omitempty"`
+	FechaEvento   *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	FechaTraspaso *string            `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL FLETE ========== **/
 type BlFlete struct {
-	IDMongo     primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	Descripcion *string            `json:"descripcion" bson:"descripcion"`
-	Tipo        *string            `json:"tipo,omitempty" bson:"tipo,omitempty"`
-	BlNroBl     *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
-	Evento      string             `json:"evento,omitempty" bson:"evento,omitempty"`
-	FechaEvento *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	IDMongo       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	Descripcion   *string            `json:"descripcion" bson:"descripcion"`
+	Tipo          *string            `json:"tipo,omitempty" bson:"tipo,omitempty"`
+	BlNroBl       *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
+	Evento        string             `json:"evento,omitempty" bson:"evento,omitempty"`
+	FechaEvento   *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	FechaTraspaso *string            `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL ITEM IMO ========== **/
 type BlItemImo struct {
-	IDMongo     primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	ID          *int64             `json:"id,omitempty" bson:"id,omitempty"`
-	ClaseImo    *string            `json:"clase_imo,omitempty" bson:"clase_imo,omitempty"`
-	NumeroImo   *int64             `json:"numero_imo,omitempty" bson:"numero_imo,omitempty"`
-	BlItemID    *int64             `json:"bl_item_id,omitempty" bson:"bl_item_id,omitempty"`
-	Evento      string             `json:"evento,omitempty" bson:"evento,omitempty"`
-	FechaEvento *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	IDMongo       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	ID            *int64             `json:"id,omitempty" bson:"id,omitempty"`
+	ClaseImo      *string            `json:"clase_imo,omitempty" bson:"clase_imo,omitempty"`
+	NumeroImo     *int64             `json:"numero_imo,omitempty" bson:"numero_imo,omitempty"`
+	BlItemID      *int64             `json:"bl_item_id,omitempty" bson:"bl_item_id,omitempty"`
+	Evento        string             `json:"evento,omitempty" bson:"evento,omitempty"`
+	FechaEvento   *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	FechaTraspaso *string            `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL ITEM ========== **/
@@ -392,6 +408,7 @@ type BlItem struct {
 	FechaEvento        *string             `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
 	BlItemImos         *[]BlItemImo        `json:"bl_item_imos,omitempty" bson:"bl_item_imos,omitempty"`
 	BlItemContenedores *[]BlItemContenedor `json:"bl_item_contenedores,omitempty" bson:"bl_item_contenedores,omitempty"`
+	FechaTraspaso      *string             `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL ITEM CONTENEDOR ========== **/
@@ -412,6 +429,7 @@ type BlItemContenedor struct {
 	FechaEvento            *string                  `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
 	BlItemContenedorImos   *[]BlItemContenedorImo   `json:"bl_item_contenedor_imos,omitempty" bson:"bl_item_contenedor_imos,omitempty"`
 	BlItemContenedorSellos *[]BlItemContenedorSello `json:"bl_item_contenedor_sellos,omitempty" bson:"bl_item_contenedor_sellos,omitempty"`
+	FechaTraspaso          *string                  `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL ITEM CONTENEDOR IMO ========== **/
@@ -423,6 +441,7 @@ type BlItemContenedorImo struct {
 	BlItemContenedorID *int64             `json:"bl_item_contenedor_id,omitempty" bson:"bl_item_contenedor_id,omitempty"`
 	Evento             string             `json:"evento,omitempty" bson:"evento,omitempty"`
 	FechaEvento        *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	FechaTraspaso      *string            `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL ITEM CONTENEDOR SELLO ========== **/
@@ -435,29 +454,32 @@ type BlItemContenedorSello struct {
 	BlItemContenedorID *int64             `json:"bl_item_contenedor_id,omitempty" bson:"bl_item_contenedor_id,omitempty"`
 	Evento             string             `json:"evento,omitempty" bson:"evento,omitempty"`
 	FechaEvento        *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	FechaTraspaso      *string            `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL LOCACION ========== **/
 type BlLocacion struct {
-	IDMongo     primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	ID          *int64             `json:"id,omitempty" bson:"id,omitempty"`
-	Codigo      *string            `json:"codigo,omitempty" bson:"codigo,omitempty"`
-	Descripcion *string            `json:"descripcion,omitempty" bson:"descripcion,omitempty"`
-	Nombre      *string            `json:"nombre,omitempty" bson:"nombre,omitempty"`
-	BlNroBl     *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
-	Evento      string             `json:"evento,omitempty" bson:"evento,omitempty"`
-	FechaEvento *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	IDMongo       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	ID            *int64             `json:"id,omitempty" bson:"id,omitempty"`
+	Codigo        *string            `json:"codigo,omitempty" bson:"codigo,omitempty"`
+	Descripcion   *string            `json:"descripcion,omitempty" bson:"descripcion,omitempty"`
+	Nombre        *string            `json:"nombre,omitempty" bson:"nombre,omitempty"`
+	BlNroBl       *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
+	Evento        string             `json:"evento,omitempty" bson:"evento,omitempty"`
+	FechaEvento   *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	FechaTraspaso *string            `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL OBSERVACION ========== **/
 type BlObservacion struct {
-	IDMongo     primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	ID          *int64             `json:"id,omitempty" bson:"id,omitempty"`
-	Contenido   *string            `json:"contenido,omitempty" bson:"contenido,omitempty"`
-	Nombre      *string            `json:"nombre,omitempty" bson:"nombre,omitempty"`
-	BlNroBl     *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
-	Evento      string             `json:"evento,omitempty" bson:"evento,omitempty"`
-	FechaEvento *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	IDMongo       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	ID            *int64             `json:"id,omitempty" bson:"id,omitempty"`
+	Contenido     *string            `json:"contenido,omitempty" bson:"contenido,omitempty"`
+	Nombre        *string            `json:"nombre,omitempty" bson:"nombre,omitempty"`
+	BlNroBl       *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
+	Evento        string             `json:"evento,omitempty" bson:"evento,omitempty"`
+	FechaEvento   *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	FechaTraspaso *string            `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL PARTICIPANTE ========== **/
@@ -478,6 +500,7 @@ type BlParticipante struct {
 	BlNroBl          *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
 	Evento           string             `json:"evento,omitempty" bson:"evento,omitempty"`
 	FechaEvento      *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	FechaTraspaso    *string            `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL REFERENCIA ========== **/
@@ -495,6 +518,7 @@ type BlReferencia struct {
 	BlNroBl        *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
 	Evento         string             `json:"evento,omitempty" bson:"evento,omitempty"`
 	FechaEvento    *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	FechaTraspaso  *string            `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL TRANSBORDO ========== **/
@@ -507,6 +531,7 @@ type BlTransbordo struct {
 	BlNroBl          *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
 	Evento           string             `json:"evento,omitempty" bson:"evento,omitempty"`
 	FechaEvento      *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	FechaTraspaso    *string            `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }
 
 /** ========== BL TRANSPORTE ========== **/
@@ -517,4 +542,5 @@ type BlTransporte struct {
 	BlNroBl          *int64             `json:"bl_nro_bl,omitempty" bson:"bl_nro_bl,omitempty"`
 	Evento           string             `json:"evento,omitempty" bson:"evento,omitempty"`
 	FechaEvento      *string            `json:"fecha_evento,omitempty" bson:"fecha_evento,omitempty"`
+	FechaTraspaso    *string            `json:"fecha_traspaso,omitempty" bson:"fecha_traspaso,omitempty"`
 }

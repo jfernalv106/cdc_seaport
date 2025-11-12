@@ -10,19 +10,20 @@ import (
 // ================== BL FECHAS ==================
 func ReemplazarBlFecha(bl *model.BL, nueva model.BlFecha) (*model.BL, error) {
 	if bl == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if bl.BlFechas == nil {
 		fmt.Println("Inicializando BL FECHAS ")
 		bl.BlFechas = &[]model.BlFecha{}
 	}
-	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
+	if (nueva.Evento != "CREATE" || bl.Evento != "CREATE") && *bl.FechaUp != *nueva.FechaTraspaso {
+		fmt.Println("Nuevo BL en BL FECHAS ")
 		bl.IDMongo = primitive.NewObjectID()
 	}
-	if nueva.Evento == "CREATE" || len(*bl.BlFechas) == 0 {
+	if len(*bl.BlFechas) == 0 {
 		*bl.BlFechas = append(*bl.BlFechas, nueva)
 	}
-	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
+
 	if nueva.Evento == "DELETE" {
 		var nuevosDetalles []model.BlFecha
 
@@ -37,7 +38,6 @@ func ReemplazarBlFecha(bl *model.BL, nueva model.BlFecha) (*model.BL, error) {
 	}
 	if nueva.Evento == "UPDATE" {
 		var encontrado bool = false
-		// Reemplazar el detalle existente con el nuevo detalle basado en el ID
 		for i, detalle := range *bl.BlFechas {
 			if *detalle.ID == *nueva.ID {
 				(*bl.BlFechas)[i] = nueva
@@ -61,17 +61,18 @@ func ReemplazarBlFecha(bl *model.BL, nueva model.BlFecha) (*model.BL, error) {
 // ================== BL FLETES ==================
 func ReemplazarBlFlete(bl *model.BL, nueva model.BlFlete) (*model.BL, error) {
 	if bl == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if bl.BlFletes == nil {
 		fmt.Println("Inicializando BL FLETES ")
 		bl.BlFletes = &[]model.BlFlete{}
 	}
 
-	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
+	if (nueva.Evento != "CREATE" || bl.Evento != "CREATE") && *bl.FechaUp != *nueva.FechaTraspaso {
+		fmt.Println("Nuevo BL en BL Fletes ")
 		bl.IDMongo = primitive.NewObjectID()
 	}
-	if nueva.Evento == "CREATE" || len(*bl.BlFletes) == 0 {
+	if len(*bl.BlFletes) == 0 {
 		*bl.BlFletes = append(*bl.BlFletes, nueva)
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
@@ -113,17 +114,17 @@ func ReemplazarBlFlete(bl *model.BL, nueva model.BlFlete) (*model.BL, error) {
 // ================== BL ITEMS ==================
 func ReemplazarBlItem(bl *model.BL, nueva model.BlItem) (*model.BL, error) {
 	if bl == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if bl.BlItems == nil {
 		fmt.Println("Inicializando BL ITEMS ")
 		bl.BlItems = &[]model.BlItem{}
 	}
 
-	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
+	if (nueva.Evento != "CREATE" || bl.Evento != "CREATE") && *bl.FechaUp != *nueva.FechaTraspaso {
 		bl.IDMongo = primitive.NewObjectID()
 	}
-	if nueva.Evento == "CREATE" || len(*bl.BlItems) == 0 {
+	if len(*bl.BlItems) == 0 {
 		*bl.BlItems = append(*bl.BlItems, nueva)
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
@@ -165,14 +166,14 @@ func ReemplazarBlItem(bl *model.BL, nueva model.BlItem) (*model.BL, error) {
 // ================== BL ITEM IMO ==================
 func ReemplazarBlItemImo(item *model.BlItem, nueva model.BlItemImo) (*model.BlItem, error) {
 	if item == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if item.BlItemImos == nil {
 		fmt.Println("Inicializando BL ITEM IMO ")
 		item.BlItemImos = &[]model.BlItemImo{}
 	}
 
-	if nueva.Evento == "CREATE" || len(*item.BlItemImos) == 0 {
+	if len(*item.BlItemImos) == 0 {
 		*item.BlItemImos = append(*item.BlItemImos, nueva)
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
@@ -214,15 +215,16 @@ func ReemplazarBlItemImo(item *model.BlItem, nueva model.BlItemImo) (*model.BlIt
 // ================== BL ITEM CONTENEDOR ==================
 func ReemplazarBlItemContenedor(item *model.BlItem, nueva model.BlItemContenedor) (*model.BlItem, error) {
 	if item == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if item.BlItemContenedores == nil {
-		fmt.Println("Inicializando BL ITEM IMO ")
+		fmt.Println("Inicializando BL Contenedor ")
 		item.BlItemContenedores = &[]model.BlItemContenedor{}
 	}
 
-	if nueva.Evento == "CREATE" || len(*item.BlItemContenedores) == 0 {
+	if len(*item.BlItemContenedores) == 0 {
 		*item.BlItemContenedores = append(*item.BlItemContenedores, nueva)
+		fmt.Println("Agrega BL Contenedor ")
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
 	if nueva.Evento == "DELETE" {
@@ -257,20 +259,21 @@ func ReemplazarBlItemContenedor(item *model.BlItem, nueva model.BlItemContenedor
 		item.Evento = "UPDATE"
 	}
 	item.FechaEvento = nueva.FechaEvento
+	fmt.Println("Retorna Item en  BL Contenedor ")
 	return item, nil
 }
 
 // ================== BL ITEM CONTENEDOR IMO ==================
 func ReemplazarBlItemContenedorImo(cnt *model.BlItemContenedor, nueva model.BlItemContenedorImo) (*model.BlItemContenedor, error) {
 	if cnt == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if cnt.BlItemContenedorImos == nil {
 		fmt.Println("Inicializando BL ITEM CONTENEDOR IMO ")
 		cnt.BlItemContenedorImos = &[]model.BlItemContenedorImo{}
 	}
 
-	if nueva.Evento == "CREATE" || len(*cnt.BlItemContenedorImos) == 0 {
+	if len(*cnt.BlItemContenedorImos) == 0 {
 		*cnt.BlItemContenedorImos = append(*cnt.BlItemContenedorImos, nueva)
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
@@ -312,14 +315,14 @@ func ReemplazarBlItemContenedorImo(cnt *model.BlItemContenedor, nueva model.BlIt
 // ================== BL ITEM CONTENEDOR SELLO ==================
 func ReemplazarBlItemContenedorSello(cnt *model.BlItemContenedor, nueva model.BlItemContenedorSello) (*model.BlItemContenedor, error) {
 	if cnt == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if cnt.BlItemContenedorSellos == nil {
-		fmt.Println("Inicializando BL ITEM CONTENEDOR IMO ")
+		fmt.Println("Inicializando BL ITEM CONTENEDOR Sello ")
 		cnt.BlItemContenedorSellos = &[]model.BlItemContenedorSello{}
 	}
 
-	if nueva.Evento == "CREATE" || len(*cnt.BlItemContenedorSellos) == 0 {
+	if len(*cnt.BlItemContenedorSellos) == 0 {
 		*cnt.BlItemContenedorSellos = append(*cnt.BlItemContenedorSellos, nueva)
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
@@ -361,17 +364,17 @@ func ReemplazarBlItemContenedorSello(cnt *model.BlItemContenedor, nueva model.Bl
 // ================== BL PARTICIPANTES ==================
 func ReemplazarBlParticipante(bl *model.BL, nueva model.BlParticipante) (*model.BL, error) {
 	if bl == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if bl.BlParticipantes == nil {
 		fmt.Println("Inicializando bl_fechas ")
 		bl.BlParticipantes = &[]model.BlParticipante{}
 	}
 
-	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
+	if (nueva.Evento != "CREATE" || bl.Evento != "CREATE") && *bl.FechaUp != *nueva.FechaTraspaso {
 		bl.IDMongo = primitive.NewObjectID()
 	}
-	if nueva.Evento == "CREATE" || len(*bl.BlParticipantes) == 0 {
+	if len(*bl.BlParticipantes) == 0 {
 		*bl.BlParticipantes = append(*bl.BlParticipantes, nueva)
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
@@ -413,17 +416,17 @@ func ReemplazarBlParticipante(bl *model.BL, nueva model.BlParticipante) (*model.
 // ================== BL OBSERVACIONES ==================
 func ReemplazarBlObservacion(bl *model.BL, nueva model.BlObservacion) (*model.BL, error) {
 	if bl == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if bl.BlObservaciones == nil {
 		fmt.Println("Inicializando bl_fechas ")
 		bl.BlObservaciones = &[]model.BlObservacion{}
 	}
 
-	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
+	if (nueva.Evento != "CREATE" || bl.Evento != "CREATE") && *bl.FechaUp != *nueva.FechaTraspaso {
 		bl.IDMongo = primitive.NewObjectID()
 	}
-	if nueva.Evento == "CREATE" || len(*bl.BlObservaciones) == 0 {
+	if len(*bl.BlObservaciones) == 0 {
 		*bl.BlObservaciones = append(*bl.BlObservaciones, nueva)
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
@@ -465,17 +468,17 @@ func ReemplazarBlObservacion(bl *model.BL, nueva model.BlObservacion) (*model.BL
 // ================== BL LOCACIONES ==================
 func ReemplazarBlLocacion(bl *model.BL, nueva model.BlLocacion) (*model.BL, error) {
 	if bl == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if bl.BlLocaciones == nil {
 		fmt.Println("Inicializando bl_fechas ")
 		bl.BlLocaciones = &[]model.BlLocacion{}
 	}
 
-	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
+	if (nueva.Evento != "CREATE" || bl.Evento != "CREATE") && *bl.FechaUp != *nueva.FechaTraspaso {
 		bl.IDMongo = primitive.NewObjectID()
 	}
-	if nueva.Evento == "CREATE" || len(*bl.BlLocaciones) == 0 {
+	if len(*bl.BlLocaciones) == 0 {
 		*bl.BlLocaciones = append(*bl.BlLocaciones, nueva)
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
@@ -517,17 +520,17 @@ func ReemplazarBlLocacion(bl *model.BL, nueva model.BlLocacion) (*model.BL, erro
 // ================== BL REFERENCIAS ==================
 func ReemplazarBlReferencia(bl *model.BL, nueva model.BlReferencia) (*model.BL, error) {
 	if bl == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if bl.BlReferencias == nil {
 		fmt.Println("Inicializando bl_fechas ")
 		bl.BlReferencias = &[]model.BlReferencia{}
 	}
 
-	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
+	if (nueva.Evento != "CREATE" || bl.Evento != "CREATE") && *bl.FechaUp != *nueva.FechaTraspaso {
 		bl.IDMongo = primitive.NewObjectID()
 	}
-	if nueva.Evento == "CREATE" || len(*bl.BlReferencias) == 0 {
+	if len(*bl.BlReferencias) == 0 {
 		*bl.BlReferencias = append(*bl.BlReferencias, nueva)
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
@@ -569,17 +572,17 @@ func ReemplazarBlReferencia(bl *model.BL, nueva model.BlReferencia) (*model.BL, 
 // ================== BL TRANSBORDOS ==================
 func ReemplazarBlTransbordo(bl *model.BL, nueva model.BlTransbordo) (*model.BL, error) {
 	if bl == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if bl.BlTransbordos == nil {
 		fmt.Println("Inicializando bl_fechas ")
 		bl.BlTransbordos = &[]model.BlTransbordo{}
 	}
 
-	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
+	if (nueva.Evento != "CREATE" || bl.Evento != "CREATE") && *bl.FechaUp != *nueva.FechaTraspaso {
 		bl.IDMongo = primitive.NewObjectID()
 	}
-	if nueva.Evento == "CREATE" || len(*bl.BlTransbordos) == 0 {
+	if len(*bl.BlTransbordos) == 0 {
 		*bl.BlTransbordos = append(*bl.BlTransbordos, nueva)
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
@@ -621,17 +624,17 @@ func ReemplazarBlTransbordo(bl *model.BL, nueva model.BlTransbordo) (*model.BL, 
 // ================== BL TRANSPORTES ==================
 func ReemplazarBlTransporte(bl *model.BL, nueva model.BlTransporte) (*model.BL, error) {
 	if bl == nil {
-		return nil, fmt.Errorf("El BL no puede ser nulo")
+		return nil, fmt.Errorf("el bl no puede ser nulo")
 	}
 	if bl.BlTransportes == nil {
 		fmt.Println("Inicializando bl_fechas ")
 		bl.BlTransportes = &[]model.BlTransporte{}
 	}
 
-	if nueva.Evento != "CREATE" || bl.Evento != "CREATE" {
+	if (nueva.Evento != "CREATE" || bl.Evento != "CREATE") && *bl.FechaUp != *nueva.FechaTraspaso {
 		bl.IDMongo = primitive.NewObjectID()
 	}
-	if nueva.Evento == "CREATE" || len(*bl.BlTransportes) == 0 {
+	if len(*bl.BlTransportes) == 0 {
 		*bl.BlTransportes = append(*bl.BlTransportes, nueva)
 	}
 	// Si el evento es DELETE, eliminar el detalle con el ID correspondiente
